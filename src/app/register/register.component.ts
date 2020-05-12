@@ -98,7 +98,7 @@ export class RegisterComponent implements OnInit {
   ) {
     this.registerForm = this.formBuilder.group({
       firstName : '',
-      lastName:'',
+      lastName: '',
       email: '',
       phone: '',
       dateOfBirth: Date,
@@ -127,8 +127,8 @@ export class RegisterComponent implements OnInit {
         city: userData.city,
         zipCode: userData.zipCode,
         country: userData.country,
-        username:userData.username,
-        password:userData.password};
+        username: userData.username,
+        password: userData.password};
 
 
         if(this.isValidForm(userData)){
@@ -140,7 +140,7 @@ export class RegisterComponent implements OnInit {
               .subscribe(
               res => {localStorage.setItem('loggedInUserID',res.uid),
               this.router.navigate(['/home'])
-              }, error => 
+              }, error =>
               console.error(error.reason));
               this.registerForm.reset();
             },
@@ -152,13 +152,13 @@ export class RegisterComponent implements OnInit {
             console.log(this.warningMessage);
             console.error(error);
           });
-      
 
-          
+
+
           console.warn('Successfuly registered!');
         } else this.formNotValid = true;
-        
-    
+
+
   }
 
 
@@ -170,14 +170,14 @@ export class RegisterComponent implements OnInit {
     }
     if(
       userData.firstName == '' || userData.lastName == '' ||
-      userData.email == '' || userData.phone == '' || 
+      userData.email == '' || userData.phone == '' ||
       userData.dateOfBirth == 'mm/dd/yyyy' || userData.username =='' ||
       userData.password == '' || userData.address == '' ||
       userData.city == '' || userData.zipCode == ''){
       this.warningMessage = "All fields are required!"
       return false
-      } 
-      
+      }
+
     this.warningMessage = '';
     return true;
 
