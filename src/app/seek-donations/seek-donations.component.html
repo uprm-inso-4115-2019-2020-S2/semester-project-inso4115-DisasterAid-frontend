@@ -1,0 +1,67 @@
+<html>
+    <nav
+    class="navbar navbar-light">
+    <a class="navbar-brand mr-1" href="#"
+      ><img src="/assets/DAD_logo.png" style="width: 50%;"
+    /></a>
+    <ul
+      class="nav navbar-justified navbar-right ml-auto"
+      style="margin-right: 3%;"
+    >
+      <li class="nav-item">
+        <a class="nav-link menuItem" routerLink="/my-donations">DONATE</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link menuItem" href="/request">MY REQUESTS</a>
+      </li>
+      <!-- <li class="nav-item">
+        <a class="nav-link menuItem" href="/home">HOME</a>
+      </li> -->
+      <li class="nav-item">
+        <a
+          class="nav-link menuItem"
+          routerLink="/home"
+          routerLinkActive="active"
+          >HOME</a
+        >
+      </li>
+    </ul>
+  </nav>
+  
+  <div>
+  
+   <p class="title">Seek Donations:</p>
+  <table>
+      <tr>
+          <td style="vertical-align: top;">
+            <ul id="donations-list" >
+                <div *ngFor="let donation of donationsList">
+                  <div  class="donation-box" *ngIf="donation.uid != loggedInUserID">
+                    <span><img src="../assets/{{donation.supplyName}}.png" width="40px"></span>
+                    <span>Supply: {{ donation.supplyName }}</span>
+                    <span>Quantity: {{ donation.quantity }} {{ donation.unit }}</span>
+                    <span>Location: {{ donation.user.city }}</span>
+                    <span><button id="get-btn_{{donation.did}}"  (click)="getItem(donation)">Get</button></span>
+                  </div>
+                </div>
+              </ul>
+          </td>
+          <td style="vertical-align: top;">
+            <div class="checkout">
+                <p class="checkoutTitle">Checkout</p>
+                <ul>
+                    <div *ngFor="let item of checkoutItems">
+                      Supply: {{item.supplyName}}  (   Quantity:{{item.quantity}}   ) </div>
+                </ul>
+                <div style="padding-top:55%;">
+                  <button style="width: 80% !important; vertical-align:80%;" (click)="requestItems()">Request items</button>
+                </div>
+              </div>
+          </td>
+      </tr>
+  </table>
+  
+  
+  </div> 
+</html>
+
