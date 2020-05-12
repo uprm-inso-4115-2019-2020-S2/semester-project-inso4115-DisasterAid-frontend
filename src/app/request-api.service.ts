@@ -23,7 +23,7 @@ constructor(private httpClient:HttpClient) { }
                 return throwError(error);
   }
 
-    public server:String = " https://disaster-aid-app.herokuapp.com/";
+    public server:String = 'https://disaster-aid-app.herokuapp.com/';
 
    public getRequestById(rId: String):Observable<RequestByIdResponse> {
      return this.httpClient

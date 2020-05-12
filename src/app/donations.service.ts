@@ -22,7 +22,7 @@ export class DonationsService {
                 return throwError(error);
   }
 
-  public server:String = " https://disaster-aid-app.herokuapp.com/";
+  public server:String = 'https://disaster-aid-app.herokuapp.com/';
 
   public getDonations(): Observable<Donation[]> {
     return this.httpClient

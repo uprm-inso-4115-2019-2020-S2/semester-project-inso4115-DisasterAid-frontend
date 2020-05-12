@@ -26,7 +26,7 @@ export class SeekDonationsService {
                 return throwError(error);
   }
 
-    public server:String = " https://disaster-aid-app.herokuapp.com/";
+    public server:String = 'https://disaster-aid-app.herokuapp.com/';
 
    public seekDonations(mySearch?:String):Observable<SeekResponse> {
      if(mySearch==''){ mySearch = 'available';}

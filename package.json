@@ -8,7 +8,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "production": "ng build --prod"
+    "production": "node server.js"
   },
   "private": true,
   "dependencies": {
@@ -21,6 +21,7 @@
     "@angular/platform-browser-dynamic": "~9.0.1",
     "@angular/router": "~9.0.1",
     "bootstrap": "^4.4.1",
+    "express": "^4.17.1",
     "jquery": "^3.5.1",
     "rxjs": "~6.5.4",
     "rxjs-compat": "^6.5.5",
