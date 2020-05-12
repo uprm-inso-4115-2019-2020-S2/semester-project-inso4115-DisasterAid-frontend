@@ -24,20 +24,20 @@ export class UserApiService {
                 return throwError(error);
   }
 
-    public server:String = " http://localhost:5000/";
+    public server:String = " https://disaster-aid-app.herokuapp.com/";
 
    public getUsers():Observable<UserResponse> {
      return this.httpClient
      .get<UserResponse>(this.server + "DAD/users")
      .pipe(catchError (this._handleError));
-   } 
+   }
 
    public getUserById(userID : String): Observable<UserResponse> {
     return this.httpClient
     .get<UserResponse>(this.server + `DAD/users/${userID}`)
     .pipe(catchError (this._handleError));
   }
-  
+
 
   public login(username:String, password:String): Observable<LoginResult>{
     const httpOptions = {
@@ -55,9 +55,9 @@ export class UserApiService {
     return this.httpClient.get<String>(this.server+"DAD/logout")
     .pipe(catchError (this._handleError));
   }
-  
+
   public createUser(user: User): Observable<any> {
-    
+
     const httpOptions = {
       headers: new HttpHeaders ({
         'Content-Type':'application/json',
@@ -67,7 +67,7 @@ export class UserApiService {
     return this.httpClient
     .post(this.server + "DAD/users", user, httpOptions)
     .pipe(catchError (this._handleError));
-  } 
+  }
 
   public editUser(user: User): Observable<any> {
     const httpOptions = {
@@ -86,5 +86,5 @@ export class UserApiService {
     .delete(this.server + `DAD/users/${userid}`)
     .pipe(catchError (this._handleError));
   }
-     
+
 }

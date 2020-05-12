@@ -13,7 +13,7 @@ import { SeekResponse } from './seek-response';
   providedIn: 'root'
 })
 export class SeekDonationsService {
-  
+
   constructor(private httpClient:HttpClient) { }
 
   private _handleError(error: HttpErrorResponse | any) {
@@ -26,14 +26,14 @@ export class SeekDonationsService {
                 return throwError(error);
   }
 
-    public server:String = " http://localhost:5000/";
+    public server:String = " https://disaster-aid-app.herokuapp.com/";
 
    public seekDonations(mySearch?:String):Observable<SeekResponse> {
-     if(mySearch==''){ mySearch = 'available';} 
+     if(mySearch==''){ mySearch = 'available';}
      return this.httpClient
      .get<SeekResponse>(this.server + `DAD/donations?search=${mySearch}`)
      .pipe(catchError (this._handleError));
-   } 
+   }
 
 
   public editDonationQuantity(donation: Donation): Observable<any> {
@@ -64,5 +64,5 @@ export class SeekDonationsService {
   }
 
 
-    
+
 }
