@@ -14,30 +14,30 @@ export class UserApiService {
 
   constructor(private httpClient:HttpClient) { }
 
-  public server = 'https://disaster-aid-app.herokuapp.com/';
-
   private _handleError(error: HttpErrorResponse | any) {
     let data = {};
-    data = {
-      reason: error && error.error.message ? error.error.message : '',
-      status: error.status
-    };
-    console.error(data);
-    return throwError(error);
+                data = {
+                    reason: error && error.error.message ? error.error.message : '',
+                    status: error.status
+                };
+                console.error(data);
+                return throwError(error);
   }
 
-  public getUsers(): Observable<UserResponse> {
+    public server:String = " http://localhost:5000/";
+
+   public getUsers():Observable<UserResponse> {
+     return this.httpClient
+     .get<UserResponse>(this.server + "DAD/users")
+     .pipe(catchError (this._handleError));
+   } 
+
+   public getUserById(userID : String): Observable<UserResponse> {
     return this.httpClient
-      .get<UserResponse>(this.server + 'DAD/users')
-      .pipe(catchError (this._handleError));
+    .get<UserResponse>(this.server + `DAD/users/${userID}`)
+    .pipe(catchError (this._handleError));
   }
-
-  public getUserById(userID: String): Observable<UserResponse> {
-    return this.httpClient
-      .get<UserResponse>(this.server + `DAD/users/${userID}`)
-      .pipe(catchError (this._handleError));
-  }
-
+  
 
   public login(username:String, password:String): Observable<LoginResult>{
     const httpOptions = {
@@ -47,17 +47,17 @@ export class UserApiService {
       })
     };
     return this.httpClient
-      .post<LoginResult>(this.server + "DAD/login", {username, password}, httpOptions)
-      .pipe(catchError (this._handleError));
+    .post<LoginResult>(this.server + "DAD/login", {username, password}, httpOptions)
+    .pipe(catchError (this._handleError));
   }
 
   public logout():Observable<String>{
     return this.httpClient.get<String>(this.server+"DAD/logout")
-      .pipe(catchError (this._handleError));
+    .pipe(catchError (this._handleError));
   }
-
+  
   public createUser(user: User): Observable<any> {
-
+    
     const httpOptions = {
       headers: new HttpHeaders ({
         'Content-Type':'application/json',
@@ -65,9 +65,9 @@ export class UserApiService {
       })
     };
     return this.httpClient
-      .post(this.server + 'DAD/users', user, httpOptions)
-      .pipe(catchError (this._handleError));
-  }
+    .post(this.server + "DAD/users", user, httpOptions)
+    .pipe(catchError (this._handleError));
+  } 
 
   public editUser(user: User): Observable<any> {
     const httpOptions = {
@@ -77,14 +77,14 @@ export class UserApiService {
       })
     };
     return this.httpClient
-      .put(this.server + `DAD/users/${user.uid}`, user, httpOptions)
-      .pipe(catchError (this._handleError));
+    .put(this.server + `DAD/users/${user.uid}`, user, httpOptions)
+    .pipe(catchError (this._handleError));
   }
 
   public deleteUser(userid: String){
     return this.httpClient
-      .delete(this.server + `DAD/users/${userid}`)
-      .pipe(catchError (this._handleError));
+    .delete(this.server + `DAD/users/${userid}`)
+    .pipe(catchError (this._handleError));
   }
-
+     
 }
