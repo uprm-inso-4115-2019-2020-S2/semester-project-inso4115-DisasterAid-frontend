@@ -12,7 +12,8 @@ import { Router } from '@angular/router';
 export class SettingsComponent implements OnInit {
 
   settingsForm: FormGroup;
-  cityList = [ "Adjuntas",
+  cityList = [
+    "Adjuntas",
     "Aguada",
     "Aguadilla",
     "Aguas Buenas",
@@ -90,10 +91,11 @@ export class SettingsComponent implements OnInit {
     "Villalba",
     "Yabucoa",
     "Yauco" ];
-  buttonClicked:String;  
+
+  buttonClicked:String;
 
   firstNameDisabled: boolean = true;
-  lastNameDisabled:boolean = true;
+  lastNameDisabled: boolean = true;
   emailDisabled:boolean = true;
   phoneDisabled:boolean = true;
   dateOfBirthDisabled:boolean = true;
@@ -103,57 +105,59 @@ export class SettingsComponent implements OnInit {
   usernameDisabled:boolean = true;
   passwordDisabled:boolean = true;
 
-  myUser:User;
+  myUser: User;
 
   constructor(
     private formBuilder: FormBuilder,
     private userApi: UserApiService,
     private router: Router
-  ) { 
+  ) {
     this.settingsForm = this.formBuilder.group({
-      firstName:'',
-      lastName:'',
+      firstName: '',
+      lastName: '',
       email: '',
-      phone:'',
+      phone: '',
       dateOfBirth: Date,
-      address:'',
-      city:'',
-      zipCode:'',
+      address: '',
+      city: '',
+      zipCode: '',
       country: 'PR',
       username: '',
-      password:''
-    })
+      password: ''
+    });
   }
 
   ngOnInit(): void {
-    if(localStorage.getItem('loggedInUserID') == null){ this.router.navigate(['/login'])}
-    
+    if (localStorage.getItem('loggedInUserID') == null) { this.router.navigate(['/login']); }
+
     console.log(localStorage.getItem('loggedInUserID'));
-      
+
     this.userApi.getUserById(localStorage.getItem('loggedInUserID')).subscribe(
       res => { this.myUser = res.user,
-      console.log(res);
-      },error =>
-       console.error(error)
-    )
+        console.log(res);
+      }, error =>
+        console.error(error)
+    );
   }
 
 
-  onSubmit(userData){
-    
-    if(userData.firstName != '') this.myUser.firstName = userData.firstName;
-    if(userData.lastName != '') this.myUser.lastName = userData.lastName;
-    if(userData.email != '') this.myUser.email = userData.email;
-    if(userData.phone != '') this.myUser.phone = userData.phone;
-    if(userData.dateOfBirth != '') this.myUser.dateOfBirth = userData.dateOfBirth; 
-    if(userData.address != '') this.myUser.address = userData.address;
-    if(userData.city != '') this.myUser.city = userData.city;
-    if(userData.zipCode != '') this.myUser.zipCode = userData.zipCode;
-    if(userData.username != '') this.myUser.username = userData.username;
-    if(userData.password != '') this.myUser.password = userData.password;
-  
-      this.userApi.editUser(this.myUser).subscribe(res=> this.router.navigate(['/home']),error => alert(error.message));
-    
+  onSubmit(userData) {
+
+    if (userData.firstName !== '') this.myUser.firstName = userData.firstName;
+    if (userData.lastName !== '') this.myUser.lastName = userData.lastName;
+    if (userData.email !== '') this.myUser.email = userData.email;
+    if (userData.phone !== '') this.myUser.phone = userData.phone;
+    if (userData.dateOfBirth !== '') this.myUser.dateOfBirth = userData.dateOfBirth;
+    if (userData.address !== '') this.myUser.address = userData.address;
+    if (userData.city !== '') this.myUser.city = userData.city;
+    if (userData.zipCode !== '') this.myUser.zipCode = userData.zipCode;
+    if (userData.username !== '') this.myUser.username = userData.username;
+    if (userData.password !== '') {
+      this.myUser.password = userData.password;
+    }
+
+    this.userApi.editUser(this.myUser).subscribe(res => this.router.navigate(['/home']), error => alert(error.message));
+
   }
 
 

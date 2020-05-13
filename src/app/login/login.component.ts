@@ -10,11 +10,11 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  loginForm : FormGroup;
+  loginForm: FormGroup;
   validUser: boolean;
   loggedInUserID: string;
-  loginFailed:boolean = false;
-  warningMessage:string;
+  loginFailed = false;
+  warningMessage: string;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -23,12 +23,12 @@ export class LoginComponent implements OnInit {
   ) {
     this.loginForm = this.formBuilder.group({
       username: '',
-      password:'',
-    })
-   }
+      password: '',
+    });
+  }
 
   ngOnInit(): void {
-    
+
   }
 
 
@@ -36,22 +36,22 @@ export class LoginComponent implements OnInit {
     this.loginFailed = false;
 
     this.usersApi
-    .login(userData.username, userData.password).subscribe(res => {
-      console.log(res);
-      this.loggedInUserID = res.uid;  
-      localStorage.setItem('loggedInUserID', this.loggedInUserID);
-      this.router.navigate(["/home"]);
-      
-    },
-    error => {
-      this.loginFailed = true;
-      console.log(error);
-      this.warningMessage = error.error.message;
-    }
+      .login(userData.username, userData.password).subscribe(res => {
+        console.log(res);
+        this.loggedInUserID = res.uid;
+        localStorage.setItem('loggedInUserID', this.loggedInUserID);
+        this.router.navigate(["/home"]);
+
+      },
+      error => {
+        this.loginFailed = true;
+        console.log(error);
+        this.warningMessage = error.error.message;
+      }
     );
 
-   
-   
+
+
   }
 
 }

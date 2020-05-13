@@ -98,7 +98,7 @@ export class RegisterComponent implements OnInit {
   ) {
     this.registerForm = this.formBuilder.group({
       firstName : '',
-      lastName:'',
+      lastName: '',
       email: '',
       phone: '',
       dateOfBirth: Date,
@@ -110,74 +110,88 @@ export class RegisterComponent implements OnInit {
       password: '',
       retype_password: '',
     });
-   }
+  }
 
   ngOnInit(): void {
   }
 
   onSubmit(userData: any){
 
-      const user: User = {
-        firstName: userData.firstName,
-        lastName: userData.lastName,
-        email: userData.email,
-        phone: userData.phone,
-        dateOfBirth: userData.dateOfBirth,
-        address : userData.address,
-        city: userData.city,
-        zipCode: userData.zipCode,
-        country: userData.country,
-        username:userData.username,
-        password:userData.password};
+    const user: User = {
+      firstName: userData.firstName,
+      lastName: userData.lastName,
+      email: userData.email,
+      phone: userData.phone,
+      dateOfBirth: userData.dateOfBirth,
+      address : userData.address,
+      city: userData.city,
+      zipCode: userData.zipCode,
+      country: userData.country,
+      username: userData.username,
+      password: userData.password};
 
 
-        if(this.isValidForm(userData)){
-          this.formNotValid = false;
+    if(this.isValidForm(userData)){
+      this.formNotValid = false;
 
-          this.usersApi.createUser(user).subscribe(
-            res => {
-              this.usersApi.login(user.username, user.password)
-              .subscribe(
+      this.usersApi.createUser(user).subscribe(
+        res => {
+          this.usersApi.login(user.username, user.password)
+            .subscribe(
               res => {localStorage.setItem('loggedInUserID',res.uid),
-              this.router.navigate(['/home'])
-              }, error => 
-              console.error(error.reason));
-              this.registerForm.reset();
-            },
-          error => {
-            this.formNotValid = true;
-            if(error.error.message == "Server error!"){
-              this.warningMessage = "Enter date of birth";
-            }
-            console.log(this.warningMessage);
-            console.error(error);
-          });
-      
+                this.router.navigate(['/home'])
+              }, error =>
+                console.error(error.reason));
+          this.registerForm.reset();
+        },
+        error => {
+          this.formNotValid = true;
+          if(error.error.message == "Server error!"){
+            this.warningMessage = "Enter date of birth";
+          }
+          console.log(this.warningMessage);
+          console.error(error);
+        });
 
-          
-          console.warn('Successfuly registered!');
-        } else this.formNotValid = true;
-        
-    
+
+
+      console.warn('Successfuly registered!');
+    } else this.formNotValid = true;
+
+
   }
 
 
   isValidForm(userData: any): boolean {
-    console.log(userData.dateOfBirth.valu)
-    if(userData.password != userData.retype_password){
-      this.warningMessage = "Passwords do not match! ";
+    const emailExp = new RegExp('^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})$');
+    const phoneExp = new RegExp('^[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]$');
+    const zipCodeExp = new RegExp('[0-9]+');
+    if (
+      userData.firstName === '' || userData.lastName === '' ||
+      userData.email === '' || userData.phone === '' ||
+      userData.dateOfBirth === 'mm/dd/yyyy' || userData.username === '' ||
+      userData.password === '' || userData.address === '' ||
+      userData.city === '' || userData.zipCode === '') {
+      this.warningMessage = 'All fields are required!';
       return false;
     }
-    if(
-      userData.firstName == '' || userData.lastName == '' ||
-      userData.email == '' || userData.phone == '' || 
-      userData.dateOfBirth == 'mm/dd/yyyy' || userData.username =='' ||
-      userData.password == '' || userData.address == '' ||
-      userData.city == '' || userData.zipCode == ''){
-      this.warningMessage = "All fields are required!"
-      return false
-      } 
-      
+    if (userData.password !== userData.retype_password) {
+      this.warningMessage = 'Passwords do not match! ';
+      return false;
+    }
+    if (!emailExp.test(userData.email)) {
+      this.warningMessage = 'Invalid Email format!';
+      return false;
+    }
+    if (!phoneExp.test(userData.phone)) {
+      this.warningMessage = 'Invalid phone number format!';
+      return false;
+    }
+    if (!zipCodeExp.test(userData.zipCode)) {
+      this.warningMessage = 'Invalid zip code format!';
+      return false;
+    }
+
     this.warningMessage = '';
     return true;
 
