@@ -129,7 +129,8 @@ export class HomeComponent implements OnInit, OnDestroy {
         {if (item.status!="Delivered"){
           this.incomingRequestsList.push(item);
         }});
-    this.numOfRequests = this.incomingRequestsList.length});
+    });
+    this.numOfRequests = this.incomingRequestsList.length;
   }
 
 
