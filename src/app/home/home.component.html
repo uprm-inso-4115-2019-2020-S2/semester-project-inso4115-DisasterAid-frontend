@@ -114,13 +114,23 @@
     <p class="user-text">{{user.firstName}} {{user.lastName}}</p>
   </div>
   <div class="rectangle-user3">
-    <p class="user-text m-2 mb-lg-n2">{{numOfDonations}}</p>
-    <p class="user-text" style="font-size: 18px;">Donations</p>
+    <table style="height: 90px !important; width: 320px; text-align: center;" >
+      <tr>
+        <td style="width: 49%;">
+          <p class="user-text m-2 mb-lg-n2">{{numOfDonations}}</p>
+          <p class="user-text" style="font-size: 18px;">Donations</p>
+        </td>
+        <td style="width: 2%; background-color: #99daf5;">
+        </td>
+        <td style="width: 49%;">
+          <p class="user-text m-2 mb-lg-n2">{{numOfRequests}}</p>
+          <p class="user-text" style="font-size: 18px;">Requests</p>
+        </td>
+      </tr>
+    </table>
+    
   </div>
-  <div class="rectangle-user3" style="left: 86%">
-    <p class="user-text m-2 mb-lg-n2">{{numOfRequests}}</p>
-    <p class="user-text" style="font-size: 18px;">Requests</p>
-  </div>
+  
   <!-- <div class="rectangle-user4">
       <p class="user-text" style="font-size: 18px;">My Requests</p>
     </div> -->
