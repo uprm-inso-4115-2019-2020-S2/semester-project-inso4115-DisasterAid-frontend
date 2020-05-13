@@ -49,6 +49,11 @@ export class DonationsComponent implements OnInit {
 
   toggleAddDonation() {
     this.showAddDonationForm = !this.showAddDonationForm;
+    if(this.showAddDonationForm) { 
+      document.getElementById("myDonationBox").classList.remove("hide");
+    }else{
+      document.getElementById("myDonationBox").classList.add("hide");
+    }
   }
 
   onAddDonationSubmit(donationData) {
@@ -64,7 +69,7 @@ export class DonationsComponent implements OnInit {
     }
 
     this.donationsService.addDonation(donationToAdd)
-    .subscribe(data => { this.donationsService.getDonations(), this.addDonationForm.reset(); },
+    .subscribe(data => { this.donationsService.getDonations(), this.addDonationForm.reset(); window.location.reload(); },
     error => console.error(error));
 
     console.warn('donation added: ', donationData);
@@ -120,16 +125,13 @@ export class DonationsComponent implements OnInit {
   }
 
   onEditDonationSubmit(values) {
-    this.editDonationForm.reset();
+   
 
     let donationToEdit: Donation = {
       supplyName: values.supplyName,
       quantity: values.quantity,
       unit: values.unit,
-      did: this.currentEditingID,
-      uid: +this.currentUserID,
-      user: +this.currentUserID,
-      createdAt: new Date(Date.now())
+      uid: +this.currentUserID
 
     }
 
@@ -143,14 +145,17 @@ export class DonationsComponent implements OnInit {
       }
     }
 
-    this.donationsService.editDonation(donationToEdit)
+    this.donationsService.editDonation(donationToEdit, this.currentEditingID)
     .subscribe(data => { 
       console.log(data);
       this.getDonations();
-      this.ngOnInit();
+      window.location.reload();
     }, error=> console.error(error));
 
     console.warn('Values did: ', values);
+
+    this.editDonationForm.reset();
+    // window.location.reload();
   }
 
 }

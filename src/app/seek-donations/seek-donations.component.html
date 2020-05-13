@@ -36,7 +36,8 @@
           <td style="vertical-align: top;">
             <ul id="donations-list" >
                 <div *ngFor="let donation of donationsList">
-                  <div  class="donation-box" *ngIf="donation.uid != loggedInUserID">
+                  <div  class="donation-box" 
+                  *ngIf="donation.uid != loggedInUserID && donation.requests.length == 0 && donation.quantity >0">
                     <span><img src="../assets/{{donation.supplyName}}.png" width="40px"></span>
                     <span>Supply: {{ donation.supplyName }}</span>
                     <span>Quantity: {{ donation.quantity }} {{ donation.unit }}</span>
@@ -53,8 +54,9 @@
                     <div *ngFor="let item of checkoutItems">
                       Supply: {{item.supplyName}}  (   Quantity:{{item.quantity}}   ) </div>
                 </ul>
-                <div style="padding-top:55%;">
+                <div style="padding-top:45%;">
                   <button style="width: 80% !important; vertical-align:80%;" (click)="requestItems()">Request items</button>
+                  <button style="width: 80% !important; vertical-align:80%;" (click)="emptyCart()">Empty Cart</button>
                 </div>
               </div>
           </td>
