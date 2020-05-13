@@ -22,7 +22,7 @@ export class DonationsService {
                 return throwError(error);
   }
 
-  public server:String = "http://localhost:5000/"
+  public server:String = "https://disaster-aid-app.herokuapp.com/";
 
   public getDonations(): Observable<Donation[]> {
     return this.httpClient
@@ -37,7 +37,7 @@ export class DonationsService {
   }
 
   public addDonation(donation: Donation): Observable<any> {
-    
+
     const httpOptions = {
       headers: new HttpHeaders ({
         'Content-Type':'application/json',
@@ -57,10 +57,10 @@ export class DonationsService {
   }
 
   public editDonation(donation: Donation, did:string): Observable<any> {
-    const httpOptions = { 
+    const httpOptions = {
       headers: new HttpHeaders ({
         'Content-Type': 'applications/json' ,
-        'Accept': 'application/json'    
+        'Accept': 'application/json'
       })
     };
     console.warn(donation);

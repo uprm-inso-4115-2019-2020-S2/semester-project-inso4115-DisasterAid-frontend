@@ -24,16 +24,16 @@ constructor(private httpClient:HttpClient) { }
                 return throwError(error);
   }
 
-    public server:String = " http://localhost:5000/";
+    public server:String = "https://disaster-aid-app.herokuapp.com/";
 
    public getRequestById(rId: String):Observable<RequestByIdResponse> {
      return this.httpClient
      .get<RequestByIdResponse>(this.server + `DAD/requests/${rId}`)
      .pipe(catchError (this._handleError));
    }
-   
+
    public createRequest(request: MyRequest): Observable<any> {
-    
+
     const httpOptions = {
       headers: new HttpHeaders ({
         'Content-Type':'application/json',
@@ -44,7 +44,7 @@ constructor(private httpClient:HttpClient) { }
     .post(this.server + "DAD/requests", request)
     .pipe(catchError (this._handleError));
   }
-  
+
   public editRequest(request: MyRequest): Observable<any> {
     const httpOptions = {
       headers: new HttpHeaders ({
@@ -73,5 +73,5 @@ constructor(private httpClient:HttpClient) { }
     return this.httpClient.get<RequestResponse>(this.server + "DAD/requests")
     .pipe(catchError (this._handleError))
   }
-     
+
 }
